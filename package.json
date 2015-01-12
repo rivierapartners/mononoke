@@ -1,0 +1,21 @@
+{
+  "name": "gulp-tree-watch",
+  "version": "0.0.1",
+  "description": "A simple gulp plugin which watches an entire tree for file changes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "plugin",
+    "watch",
+    "build"
+  ],
+  "author": "Riviera Partners",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.8.10",
+    "watch": "^0.13.0"
+  }
+}
