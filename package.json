@@ -4,7 +4,7 @@
   "description": "A simple gulp plugin which watches an entire tree for file changes.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "keywords": [
     "gulp",
@@ -19,5 +19,15 @@
     "gulp": "^3.8.10",
     "minimatch": "^2.0.1",
     "watch": "^0.13.0"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "fs.extra": "^1.3.0",
+    "jasmine": "^2.1.1",
+    "jasmine-sinon": "^0.4.0",
+    "mocha": "^2.1.0",
+    "mock-fs": "^2.3.2",
+    "rimraf": "^2.2.8",
+    "sinon": "^1.12.2"
   }
 }
