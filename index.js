@@ -1,22 +1,20 @@
 var watch = require('watch');
 var minimatch = require('minimatch');
+var path = require('path');
 
 var checkGlobs = function (callback, globs, filename) {
+    var basename = path.basename(filename);
 
     if(typeof(callback) !== "function") {
         return;
     }
 
-    console.log("In checkglobs!");
-    console.log(callback);
-    console.log(globs);
-    console.log(filename);
-
     if (globs.length) {
         for(i in globs) {
             if(globs.hasOwnProperty(i)) {
                 var currentGlob = globs[i];
-                if(minimatch(filename, currentGlob)) {
+                // Minimatch should only look at the basename (filename without the path).
+                if(minimatch(basename, currentGlob)) {
                     callback(filename);
                 }
             }
@@ -35,8 +33,6 @@ var _watcher = function(root, globs) {
     var _createdCallback = null;
     var _changedCallback = null;
     var _self = this;
-    this.root = root; 
-    if(typeof(globs) === "undefined") { console.log("undef!"); globs = [ ]; }
 
     this.created = function(callback) {
         _createdCallback = callback;
@@ -48,7 +44,7 @@ var _watcher = function(root, globs) {
         return _self;
     }; 
 
-    watch.createMonitor(this.root, function(monitor) {
+    watch.createMonitor(root, function(monitor) {
         monitor.on("created", function (f, stat) {
             checkGlobs(_createdCallback, globs, f);
         })
@@ -61,10 +57,11 @@ var _watcher = function(root, globs) {
 };
 
 
-var TreeWatch = {
-    "watch" : function(root) {
-        return new _watcher(root);
+var mononoke = {
+    "watch" : function(root, globs) {
+        if(typeof(globs) === "undefined") { globs = [ ]; }
+        return new _watcher(root, globs);
     }
 };
 
- module.exports = TreeWatch;
+ module.exports = mononoke;
