@@ -15,7 +15,9 @@
   "author": "Riviera Partners",
   "license": "ISC",
   "dependencies": {
+    "glob": "^4.3.2",
     "gulp": "^3.8.10",
+    "minimatch": "^2.0.1",
     "watch": "^0.13.0"
   }
 }
