@@ -1,7 +1,7 @@
 {
-  "name": "gulp-tree-watch",
-  "version": "0.0.1",
-  "description": "A simple gulp plugin which watches an entire tree for file changes.",
+  "name": "mononoke",
+  "version": "0.0.5",
+  "description": "A simple plugin which watches an entire tree for file changes.",
   "main": "index.js",
   "scripts": {
     "test": "jasmine"
