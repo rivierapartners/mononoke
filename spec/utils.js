@@ -40,10 +40,9 @@ var initTestDir = function(dir, dirconf) {
     writeFiles(dirconf);
 };
 
-var spyInspect = function(done, spy, fullpath) {
+var inspecter = function(fullpath, done, f) {
     setTimeout(function() {
-        expect(spy).toHaveBeenCalledOnce();
-        expect(spy).toHaveBeenCalledWith(fullpath);
+        f();
         done();
         return;
     }, 2000);
@@ -57,7 +56,7 @@ var wipe = function(project_root) {
 
 module.exports = {
     "init": init,
-    "spyInspect": spyInspect,
+    "inspecter" : inspecter,
     "initTestDir" : initTestDir,
     "createFile" : createFile,
     "wipe" : wipe
