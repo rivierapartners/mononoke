@@ -22,7 +22,8 @@ var writeFiles = function(config) {
     }
 }
 
-var createFile = function(maindir, filepath, content) {
+
+var _processFile = function(maindir, filepath, content) {
     var dirname = path.dirname(filepath);
     var basename = path.basename(filepath);
 
@@ -31,7 +32,17 @@ var createFile = function(maindir, filepath, content) {
         fs.mkdirpSync(dirname);
     }
     process.chdir(dirname);
+    return basename;
+}
+
+var createFile = function(maindir, filepath, content) {
+    basename = _processFile(maindir, filepath, content);
     fs.writeFileSync(basename, content);
+}
+
+var appendFile = function(maindir, filepath, content) {
+    basename = _processFile(maindir, filepath, content);
+    fs.appendFileSync(basename, content);
 }
 
 var initTestDir = function(dir, dirconf) {
@@ -59,5 +70,6 @@ module.exports = {
     "inspecter" : inspecter,
     "initTestDir" : initTestDir,
     "createFile" : createFile,
+    "appendFile" : appendFile,
     "wipe" : wipe
 };

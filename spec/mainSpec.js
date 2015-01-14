@@ -18,7 +18,8 @@ var dirconf = {
     'yoyoyo.txt' : 'textfile2',
     'hello.scss' : 'SCSS',
     'theme.scss' : 'yo',
-    'basic-theme.css' : 'yo'
+    'basic-theme.css' : 'yo',
+    'almost-done.html' : 'sdfsdf'
 };
 
 
@@ -68,21 +69,23 @@ describe("mononoke filetree watching", function() {
 
     describe("Top level files with several filters", function() {
         var createdSpy = null;
-        var modifiedSpy = null;
+        var changedSpy = null;
 
         beforeEach(function() {
             createdSpy = sinon.spy();
             changedSpy = sinon.spy();
         });
 
-
         it("should dispath the correct callback to the glob-matched file", function(done) {
             mononoke.watch(cwd, ['*.scss', '*.html'])
                 .created(createdSpy)
-                .changed(modifiedSpy)
+                .changed(changedSpy)
 
             // Add files
             setTimeout(function() {
+                // NOTE: Creating and appending to the file right after is 
+                // pointless, since the watch scanner will only register
+                // the new file.
                 utils.createFile(cwd, "main_page.html", "o");
                 utils.createFile(cwd, "other_page.html", "o");
                 utils.createFile(cwd, "vendor_style.scss", "o");
@@ -90,11 +93,20 @@ describe("mononoke filetree watching", function() {
                 utils.createFile(cwd, "unneeded.css", "o");
                 utils.createFile(cwd, "unneeded.htm", "o");
                 utils.createFile(cwd, "unneeded.txt", "o");
+                
+                utils.appendFile(cwd, "unneeded.htm", "lolololol ol");
+                utils.appendFile(cwd, "almost-done.html", "dfsdfdsf");
+                utils.appendFile(cwd, "hello.scss", "additional");
 
                 utils.inspecter(cwd, done, function() {
                     expect(createdSpy).toHaveBeenCalledThrice();
-//                    console.log(createdSpy);
+                    expect(createdSpy).toHaveBeenCalledWith(path.join(TEST_ROOT, STYLESHEETS_DIR, "main_page.html"));
+                    expect(createdSpy).toHaveBeenCalledWith(path.join(TEST_ROOT, STYLESHEETS_DIR, "other_page.html"));
+                    expect(createdSpy).toHaveBeenCalledWith(path.join(TEST_ROOT, STYLESHEETS_DIR, "vendor_style.scss"));
 
+                    expect(changedSpy).toHaveBeenCalledTwice();
+                    expect(changedSpy).toHaveBeenCalledWith(path.join(TEST_ROOT, STYLESHEETS_DIR, "almost-done.html"));
+                    expect(changedSpy).toHaveBeenCalledWith(path.join(TEST_ROOT, STYLESHEETS_DIR, "hello.scss"));
                 });
             }, WATCH_TIME);
         });
