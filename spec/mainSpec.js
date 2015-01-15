@@ -1,11 +1,8 @@
-var rewire = require('rewire');
 var sinon = require('sinon');
 require('jasmine-sinon');
-var watch = require('watch');
-var EventEmitter = require('events').EventEmitter;
 var path = require('path');
 var mononoke = require('../index.js');
-var assert = require('assert');
+var watch = require('watch');
 
 var FilenameEmitter = null;
 var original = watch.createMonitor; // Original createMonitor function to actually process things correctly.
