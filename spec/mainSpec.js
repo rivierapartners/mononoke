@@ -40,7 +40,7 @@ describe("maintest", function() {
         mockWatch.unwatchTree('./');
     });
 
-    describe("basic", function() {
+    describe("top level directory no globs", function() {
         beforeEach(function() {
             console.log("inner before test");
             mononoke.watch('./') 
@@ -48,7 +48,7 @@ describe("maintest", function() {
                 .changed(changedSpy);
         });
 
-        it("should work", function(done) {
+        it("should recognize both created and changed", function(done) {
             setTimeout(function() {
                 console.log("FilenameEmitter is set...");
                 FilenameEmitter.emit('created', 'file1.html');
@@ -62,7 +62,32 @@ describe("maintest", function() {
                 done();
             }, 2000);
         });
-
     });
+
+    
+     describe("top level directory globs", function() {
+        beforeEach(function() {
+            console.log("inner before test");
+            mononoke.watch('./', ['*.scss', '*.js']) 
+                .created(createdSpy)
+                .changed(changedSpy);
+        });
+
+        it("should recognize both created and changed", function(done) {
+            setTimeout(function() {
+                console.log("FilenameEmitter is set...");
+                FilenameEmitter.emit('created', 'file1.html');
+                FilenameEmitter.emit('changed', 'file2.scss');
+                FilenameEmitter.emit('created', 'file3.log');
+                FilenameEmitter.emit('changed', 'file4.js');
+                FilenameEmitter.emit('created', 'file5.js');
+
+                expect(createdSpy).toHaveBeenCalledOnce();
+                expect(changedSpy).toHaveBeenCalledTwice();
+                done();
+            }, 2000);
+        });
+    });
+
 
 });
