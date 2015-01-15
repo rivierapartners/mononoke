@@ -44,7 +44,6 @@ var _watcher = function(watch, root, globs) {
         return _self;
     }; 
 
-    console.log(watch);
     watch.createMonitor(root, function(monitor) {
         monitor.on("created", function (f, stat) {
             checkGlobs(_createdCallback, globs, f);
