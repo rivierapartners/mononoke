@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Mononoke by rivierapartners</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/rivierapartners/mononoke">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/rivierapartners/mononoke/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/rivierapartners/mononoke/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Mononoke</h1>
+          <p>A simple file watcher for Node that supports globbing within a tree.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/rivierapartners">rivierapartners</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="mononoke" class="anchor" href="#mononoke" aria-hidden="true"><span class="octicon octicon-link"></span></a>mononoke</h1>
+
+<p>mononoke is a simple library that can be used with tools such as gulp that allows you to watch a directory recursively for any changes.You assign a callback which takes a filename as a single parameter, which is applied to all the changed files. You can also specify globbing patterns within each tree, to ensure only the selected files are returned.</p>
+
+<p>** Usage **</p>
+
+<p>For simple file watching.
+<code>npm install gulp-tree-watch</code></p>
+
+<pre><code>var mononoke = require('mononoke');
+
+gulp.task('minify', function() {
+    mononoke.watch(dir)
+      .created(function(f) {
+        gulp.src(f)
+          .pipe()
+        })
+      .modified(function(f) {
+        gulp.src(f)
+          .pipe()
+        })
+
+})
+</code></pre>
+
+<p>With globbing.</p>
+
+<pre><code>mononoke.watch(dir, ['*.css', '*.scss' ])
+  .modified(function(f) {
+    minify(f);
+  }
+</code></pre>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
