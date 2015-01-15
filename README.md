@@ -6,10 +6,11 @@ You assign a callback which takes a filename as a single parameter, which is app
 You can also specify globbing patterns within each tree, to ensure only the selected files are returned.
 
 
-** Usage **
+**Usage**
 
-For simple file watching.
-`npm install gulp-tree-watch`
+
+For simple file watching to monitor all files in a directory:
+    `npm install mononoke`
 
     var mononoke = require('mononoke');
 

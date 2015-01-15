@@ -16,7 +16,7 @@ var mockWatch = {
         original(root, spy);
     },
     "unwatchTree" : watch.unwatchTree
-}
+};
 
 beforeAll(function() {
     mononoke.setWatcher(mockWatch);
@@ -29,17 +29,14 @@ describe("maintest", function() {
     beforeEach(function() {
         createdSpy = sinon.spy();
         changedSpy = sinon.spy();
-        console.log("Before each test.");
     });
 
     afterEach(function() {
-        console.log("Finishing test");
         mockWatch.unwatchTree('./');
     });
 
     describe("top level directory no globs", function() {
         beforeEach(function() {
-            console.log("inner before test");
             mononoke.watch('./') 
                 .created(createdSpy)
                 .changed(changedSpy);
@@ -47,7 +44,6 @@ describe("maintest", function() {
 
         it("should recognize both created and changed", function(done) {
             setTimeout(function() {
-                console.log("FilenameEmitter is set...");
                 FilenameEmitter.emit('created', 'file1.html');
                 FilenameEmitter.emit('changed', 'file2.scss');
                 FilenameEmitter.emit('created', 'file3.log');
@@ -64,7 +60,6 @@ describe("maintest", function() {
     
      describe("top level directory globs", function() {
         beforeEach(function() {
-            console.log("inner before test");
             mononoke.watch('./', ['*.scss', '*.js']) 
                 .created(createdSpy)
                 .changed(changedSpy);
@@ -72,7 +67,6 @@ describe("maintest", function() {
 
         it("should recognize both created and changed", function(done) {
             setTimeout(function() {
-                console.log("FilenameEmitter is set...");
                 FilenameEmitter.emit('created', 'file1.html');
                 FilenameEmitter.emit('changed', 'file2.scss');
                 FilenameEmitter.emit('created', 'file3.log');
@@ -88,7 +82,6 @@ describe("maintest", function() {
 
       describe("sub level directory globs", function() {
         beforeEach(function() {
-            console.log("inner before test");
             mononoke.watch('./', ['*.scss', '*.js']) 
                 .created(createdSpy)
                 .changed(changedSpy);
@@ -96,7 +89,6 @@ describe("maintest", function() {
 
         it("should recognize both created and changed", function(done) {
             setTimeout(function() {
-                console.log("FilenameEmitter is set...");
                 FilenameEmitter.emit('created', './inner/deep/file1.html');
                 FilenameEmitter.emit('changed', './inner/file2.scss');
                 FilenameEmitter.emit('created', 'file3.log');
@@ -109,9 +101,4 @@ describe("maintest", function() {
             }, 2000);
         });
     });
-      
-
-
-
-
 });
