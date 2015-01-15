@@ -89,5 +89,32 @@ describe("maintest", function() {
         });
     });
 
+      describe("sub level directory globs", function() {
+        beforeEach(function() {
+            console.log("inner before test");
+            mononoke.watch('./', ['*.scss', '*.js']) 
+                .created(createdSpy)
+                .changed(changedSpy);
+        });
+
+        it("should recognize both created and changed", function(done) {
+            setTimeout(function() {
+                console.log("FilenameEmitter is set...");
+                FilenameEmitter.emit('created', './inner/deep/file1.html');
+                FilenameEmitter.emit('changed', './inner/file2.scss');
+                FilenameEmitter.emit('created', 'file3.log');
+                FilenameEmitter.emit('changed', './super/duper/very/deep/file4.js');
+                FilenameEmitter.emit('created', 'file5.js');
+
+                expect(createdSpy).toHaveBeenCalledOnce();
+                expect(changedSpy).toHaveBeenCalledTwice();
+                done();
+            }, 2000);
+        });
+    });
+      
+
+
+
 
 });
